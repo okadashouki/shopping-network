@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: okada
+Implementation-Version: 0.0.1
+Built-By: Z
+Implementation-Vendor-Id: com.training
+Build-Jdk: 1.8.0_351
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/okada
+Created-By: Maven Integration for Eclipse
+

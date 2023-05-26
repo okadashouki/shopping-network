@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="info">
+   <properties>
+      <property name="LOG_HOME">/data/logs/training</property>
+      <property name="LOG_PATTERN">[%d{yyyy-MM-dd_HH:mm:ss}][%p][%F::%M][%L]-%m%n</property>
+      <property name="LOG_JSON_PATTERN">{"t":"%d{yyyy-MM-dd HH:mm:ss.SSS}","m":%m}%n</property>
+      <property name="DEL_DAY">7d</property>
+   </properties>
+
+   <appenders>
+      <Console name="console" target="SYSTEM_OUT">
+          <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY" />
+          <PatternLayout pattern="${LOG_PATTERN}" />
+      </Console>
+
+      <RollingFile name="file" fileName="${LOG_HOME}/training.log" filePattern="${LOG_HOME}/console/training.log.%d{yyyy-MM-dd}">
+          <PatternLayout pattern="${LOG_PATTERN}" />
+          <Policies>
+             <TimeBasedTriggeringPolicy />
+          </Policies>
+          <DefaultRolloverStrategy>
+             <Delete basePath="${LOG_HOME}/" maxDepth="1">
+                <IfFileName glob="training.log.*" />
+                <IfLastModified age="${DEL_DAY}" />
+             </Delete>
+          </DefaultRolloverStrategy>
+      </RollingFile>
+      
+      <RollingFile name="errorThrowable" fileName="${LOG_HOME}/Throwable/errorThrowable.log" filePattern="${LOG_HOME}/Throwable/errorThrowable.log.%d{yyyy-MM-dd}">
+          <PatternLayout pattern="${LOG_PATTERN}" />
+          <Policies>
+             <TimeBasedTriggeringPolicy />
+          </Policies>
+          <DefaultRolloverStrategy>
+             <Delete basePath="${LOG_HOME}/Throwable/" maxDepth="1">
+                <IfFileName glob="errorThrowable.log.*" />
+                <IfLastModified age="${DEL_DAY}" />
+             </Delete>
+          </DefaultRolloverStrategy>
+      </RollingFile>      
+   </appenders>
+
+   <loggers>
+      <root level="info">
+          <AppenderRef ref="console" />
+          <AppenderRef ref="file" />
+      </root> 
+      <logger name="errorThrowable-log" level="info" additivity="false">
+          <AppenderRef ref="console" />
+          <AppenderRef ref="errorThrowable" />
+      </logger>
+   </loggers>
+</configuration>

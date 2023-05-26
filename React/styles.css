@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .centered-table {
+    width: 1000px;
+    height: 400px;
+    margin: 0 auto;
+  }
+  .page {
+    display:inline-block;
+    padding-left: 10px;
+  }

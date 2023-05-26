@@ -1,0 +1,33 @@
+
+
+server:
+  port: 8085
+  servlet:
+    context-path: /training
+    session:
+      timeout: 30m
+  tomcat:
+    threads:
+      max: 200
+    uri-encoding: UTF-8
+    basedir: /data/logs/training/access_log
+    accesslog:
+      enabled: true
+      pattern: '{"Local IP":"%A","Date time":"%{yyyy-MM-dd HH:mm:ss.SSS}t","Request method":"%m","URL":"%U","HTTP status":%s,"session ID":%S,"Bytes sent":%b,"Process time":%D,"Thread name":"%I"}'
+      suffix: .log
+
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: LOCAL
+    password: root
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    hikari:
+      maximum-pool-size: 2
+      connection-timeout: 30000
+  jpa:
+    show-sql: true
+    hibernate:
+      # 不透過@Entity自動化工程建立資料表,經由schema.sql建立資料表與data.sql新增資料
+      ddl-auto: none
+
