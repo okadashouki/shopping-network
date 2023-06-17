@@ -190,9 +190,9 @@ public class MemberController {
 		        // 檢查商品ID是否已經存在於quantityMap中，若存在則累加數量，若不存在則新增映射
 		        if (quantityMap.containsKey(goodsID)) {
 		            int totalQuantity = quantityMap.get(goodsID) + goods.getBuygoodquantity();
-		            quantityMap.put(goodsID, totalQuantity);
+		            quantityMap.put(goodsID, totalQuantity<=goods.getQuantity()?totalQuantity:goods.getQuantity());
 		        } else {
-		            quantityMap.put(goodsID, goods.getBuygoodquantity());
+		            quantityMap.put(goodsID, goods.getBuygoodquantity()<=goods.getQuantity()?goods.getBuygoodquantity():goods.getQuantity());
 		            uniqueGoodsList.add(goods); // 將唯一的商品加入列表
 		        }
 		    }

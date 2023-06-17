@@ -2,15 +2,10 @@ import React, { useState, useEffect, Fragment, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
-import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
-import Table from 'react-bootstrap/Table';
 import Pagination from 'react-bootstrap/Pagination';
 import { Form, Col, Row } from 'react-bootstrap';
 import FormControl from 'react-bootstrap/FormControl';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import Modal from 'react-bootstrap/Modal';
 import Card from 'react-bootstrap/Card'
 import CardDeck from 'react-bootstrap/CardDeck';
@@ -24,8 +19,6 @@ const VendingMachine = () => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [name, setname] = useState('');
   const navigate = useNavigate();
-  const location = useLocation();
-  const inboxInfo = location.state;
   const loginData = useContext(LoginContext);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -41,7 +34,7 @@ const VendingMachine = () => {
     }
 
     fetchGoodsData();
-  }, [loginData]); // 一開始進入頁面就執行查詢商品資料
+  }, []); // 一開始進入頁面就執行查詢商品資料
 
   const fetchGoodsData = async () => {
     try {
@@ -95,7 +88,11 @@ const VendingMachine = () => {
       setModalMessage('請輸入有效的商品數量');
       setShow(true);
       return;
-    }
+    } else if (!buygoodquantity || buygoodquantity > quantity) {
+      setModalMessage('超過商品庫存');
+      setShow(true);
+      return;
+    };
     const data = {
       goodsID,
       goodsName,
@@ -110,6 +107,7 @@ const VendingMachine = () => {
     axios.post('http://localhost:8085/training/ecommerce/MemberController/addCartGoods', data)
       .then(response => {
         // 請求成功的處理邏輯
+
         setModalMessage(goodsName + buygoodquantity + '個成功加入購物車');
         setShow(true);
       })
@@ -264,6 +262,8 @@ const VendingMachine = () => {
                               <Form.Text className="text-muted">(庫存 {good.quantity} 罐)</Form.Text>
                             </Form.Group>
                             <Button variant="primary" onClick={() => {
+
+
                               addCartGoods(
                                 good.goodsID,
                                 good.goodsName,
@@ -274,6 +274,7 @@ const VendingMachine = () => {
                                 document.getElementsByName("buyQuantity")[index].value
                               );
                               handleShow(); // 顯示燈箱
+
                             }}>
                               加入購物車
                             </Button>
