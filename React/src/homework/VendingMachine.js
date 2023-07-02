@@ -256,9 +256,9 @@ const VendingMachine = () => {
                           <Card.Text>{good.price} 元/罐</Card.Text>
                           <input type="hidden" name="goodsID" value={good.goodsID} />
                           <Form>
-                            <Form.Group controlId={`buyQuantity_${index}`}>
+                            <Form.Group controlId={`buyQuantity_goods2_${index}`}>
                               <Form.Label>購買數量：</Form.Label>
-                              <Form.Control type="number" name={`buyQuantity_${index}`} min="0" max={good.quantity} size="5" />
+                              <Form.Control type="number" name={`buyQuantity_goods2_${index}`} min="0" max={good.quantity} size="5" />
                               <Form.Text className="text-muted">(庫存 {good.quantity} 罐)</Form.Text>
                             </Form.Group>
                             <Button variant="primary" onClick={() => {
@@ -271,7 +271,7 @@ const VendingMachine = () => {
                                 good.imageName,
                                 good.price,
                                 good.quantity,
-                                document.getElementsByName("buyQuantity")[index].value
+                                document.getElementsByName(`buyQuantity_goods2_${index}`)[0].value
                               );
                               handleShow(); // 顯示燈箱
 
